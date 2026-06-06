@@ -32,7 +32,7 @@ class ImageFolderCSV(Dataset):
 
 NUM_WORKERS = os.cpu_count()
 
-def create_datalaoders(
+def create_dataloaders(
             train_dir: str, 
             test_dir: str,
             train_annotations_file:str, 
