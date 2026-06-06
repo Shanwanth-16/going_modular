@@ -1,5 +1,5 @@
 import os
-from torchvision import datasets, transforms
+from torchvision import transforms
 from torch.utils.data import DataLoader,Dataset
 import pandas as pd
 from torchvision.io import decode_image
@@ -24,10 +24,12 @@ class ImageFolderCSV(Dataset):
             img_path = os.path.join(self.img_dir,self.img_labels.iloc[idx,0])
             image = decode_image(img_path)
             label = self.img_labels.iloc[idx,1]
+            label = self.class_to_idx[label]
             if self.transform:
                   image = self.transform(image)
             if self.target_transform:
-                  image = self.target_transform(image)
+                  label = self.target_transform(label)
+
             return image,label
 
 NUM_WORKERS = os.cpu_count()
