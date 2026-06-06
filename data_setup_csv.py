@@ -6,7 +6,7 @@ from torchvision.io import decode_image
 
 def find_classes(img_label):
       """  should contain a column named 'label' which indicate the class of the dataset """
-      classes = img_label['label'].unique()
+      classes = sorted(img_label.iloc[:, -1].unique())
       class_to_idx = {cls_name: i for i, cls_name in enumerate(classes)}
       return classes,class_to_idx
 
@@ -23,7 +23,7 @@ class ImageFolderCSV(Dataset):
       def __getitem__(self,idx):
             img_path = os.path.join(self.img_dir,self.img_labels.iloc[idx,0])
             image = decode_image(img_path)
-            label = self.img_labels.iloc[idx,1]
+            label = self.img_labels.iloc[idx,-1]
             label = self.class_to_idx[label]
             if self.transform:
                   image = self.transform(image)
