@@ -39,12 +39,14 @@ def create_dataloaders(
             test_dir: str,
             train_annotations_file:str, 
             test_annotations_file:str,
-            transform: transforms.Compose, 
+            train_transform: transforms.Compose,
+            test_transform: transforms.Compose, 
+            sampler,
             batch_size: int, 
             num_workers: int=NUM_WORKERS):
       
-      train_data = ImageFolderCSV(train_annotations_file,train_dir,transform)
-      test_data = ImageFolderCSV(test_annotations_file,test_dir,transform)
+      train_data = ImageFolderCSV(train_annotations_file,train_dir,train_transform)
+      test_data = ImageFolderCSV(test_annotations_file,test_dir,test_transform)
 
       class_names = train_data.classes
 
@@ -54,6 +56,7 @@ def create_dataloaders(
             shuffle=True,
             num_workers=num_workers,
             pin_memory=False,
+            sampler=sampler
       )
 
       test_dataloader = DataLoader(
