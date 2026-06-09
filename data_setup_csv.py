@@ -24,7 +24,7 @@ class ImageFolderCSV(Dataset):
             img_path = os.path.join(self.img_dir,self.img_labels.iloc[idx,0]) + ".png"
             return cv2.imread(img_path)
       def __getitem__(self,idx):
-            image = self.load_image(img_path)
+            image = self.load_image(idx)
             label = self.img_labels.iloc[idx,-1]
             label = self.class_to_idx[label]
             if self.transform:
