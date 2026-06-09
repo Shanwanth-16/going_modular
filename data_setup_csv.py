@@ -3,7 +3,7 @@ from torchvision import transforms
 from torch.utils.data import DataLoader,Dataset
 import pandas as pd
 from torchvision.io import decode_image
-
+import cv2
 def find_classes(img_label):
       """  should contain a column named 'label' which indicate the class of the dataset """
       classes = sorted(img_label.iloc[:, -1].unique())
@@ -20,9 +20,11 @@ class ImageFolderCSV(Dataset):
       def __len__(self):
             return len(self.img_labels)
 
-      def __getitem__(self,idx):
+      def load_image(self,idx):
             img_path = os.path.join(self.img_dir,self.img_labels.iloc[idx,0]) + ".png"
-            image = decode_image(img_path)
+            return cv2.imread(img_path)
+      def __getitem__(self,idx):
+            image = self.load_image(img_path)
             label = self.img_labels.iloc[idx,-1]
             label = self.class_to_idx[label]
             if self.transform:
