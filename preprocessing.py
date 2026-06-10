@@ -8,7 +8,10 @@ import cv2
 import numpy as np
 class CLAHE:
       def __call__(self,image):
-            gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            if(len(image.shape) == 3):
+                gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            else:
+                 gray_image = image
             clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
             return clahe.apply(gray_image)
       
