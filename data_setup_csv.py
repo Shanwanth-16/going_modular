@@ -51,13 +51,13 @@ def create_dataloaders(
       test_data = ImageFolderCSV(test_annotations_file,test_dir,test_transform)
 
       class_names = train_data.classes
-      shuffle = True
-      if sampler is not None:
-            shuffle = False
+      # shuffle = True
+      # if sampler is not None:
+      #       shuffle = False
       train_dataloader = DataLoader(
             train_data,
             batch_size=batch_size,
-            shuffle=shuffle,
+            shuffle=False,
             num_workers=num_workers,
             pin_memory=False,
             sampler=sampler
