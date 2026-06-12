@@ -6,15 +6,26 @@
 """
 import cv2
 import numpy as np
+
+
 class CLAHE:
-      def __call__(self,image):
-            if(len(image.shape) == 3):
-                gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            else:
-                 gray_image = image
-            clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
-            return clahe.apply(gray_image)
-      
+    def __call__(self, image):
+        lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
+
+        l, a, b = cv2.split(lab)
+
+        clahe = cv2.createCLAHE(
+            clipLimit=2.0,
+            tileGridSize=(8, 8)
+        )
+
+        l = clahe.apply(l)
+
+        lab = cv2.merge((l, a, b))
+
+        return cv2.cvtColor(lab, cv2.COLOR_LAB2RGB)
+
+
 class GreenChannelExtraction:
       def __call__(self,image):
             return image[:,:,1]
@@ -56,3 +67,24 @@ class CropBlackBorder:
             ]
 
         return img
+
+
+
+
+
+
+
+
+
+
+
+# class CLAHE:
+#       def __call__(self,image):
+#             if(len(image.shape) == 3):
+#                 gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+#             else:
+#                  gray_image = image
+#             clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+#             return clahe.apply(gray_image)
+      
+
