@@ -71,5 +71,5 @@ def create_dataloaders(
             pin_memory=False,
       )
 
-      return train_dataloader, test_dataloader, class_names
+      return train_dataloader, test_dataloader, class_names , train_data.class_to_idx ,test_data.class_to_idx
 
